@@ -16,8 +16,8 @@
         <br>
         <input type="number" name="adultfees" placeholder="adult entry fees" id="adultfees">
         <input type="number" name="childfees" placeholder="child entry fees" id="childfees">
-        <!-- <br> -->
-        <!-- <input type="text" name="currency" placeholder="currency" id="currency"> -->
+        <br>
+        <input type="text" name="currency" placeholder="currency" id="currency">
         <br>
         <input type="file" name="image1" id="image1">
         <br>
@@ -41,7 +41,7 @@
             let endtime = document.querySelector('#endtime').value
             let adultfees = document.querySelector('#adultfees').value
             let childfees = document.querySelector('#childfees').value
-            // let currency = document.querySelector('#currency').value
+            let currency = document.querySelector('#currency').value
             let image1 = document.querySelector('#image1').files[0]
             let image2 = document.querySelector('#image2').files[0]
             let image3 = document.querySelector('#image3').files[0]
@@ -54,7 +54,7 @@
             formData.append('endtime', endtime)
             formData.append('adultfees', adultfees)
             formData.append('childfees', childfees)
-            // formData.append('currency', currency)
+            formData.append('currency', currency)
             formData.append('image1', image1)
             formData.append('image2', image2)
             formData.append('image3', image3)
