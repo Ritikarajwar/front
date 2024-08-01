@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        function fetchrecord() {
+
+            fetch('https://resort-myapi.onrender.com/getdata')
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    console.log(data)
+                })
+        }
+
+        window.onload = fetchrecord;
+    </script>
+</body>
+
+</html>
