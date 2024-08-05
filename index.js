@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('https://resort-myapi.onrender.com')
+    fetch('http://localhost:8052')
         .then(response => response.json())
         .then(data => {
             console.log(data)
@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tbody.innerHTML = ''
         waterParkData.forEach(park => {
             const row = document.createElement('tr')
+            row.setAttribute('data-id', park.id) 
 
             const idCell = document.createElement('td')
             idCell.textContent = park.id
@@ -39,20 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const imagesCell = document.createElement('td')
 
-            // console.log(park.images)
-            if(park.images != ''){
-            park.images.forEach(imageUrl => {
+   
+            if (Array.isArray(park.images) && park.images.length > 0) {
+                park.images.forEach(imageUrl => {
+                    const img = document.createElement('img')
+                    img.src = imageUrl
+                    imagesCell.appendChild(img)
+                })
+            } else {
                 const img = document.createElement('img')
-               
-                
-                img.src = imageUrl
-                imagesCell.appendChild(img)
-                
-            })}
-            else{
-                const img = document.createElement('img')
-               
-                
                 img.src = "https://th.bing.com/th/id/OIP.H5fnS0juRxxh_dzA9HdeUAHaE8?w=301&h=200&c=7&r=0&o=5&dpr=1.3&pid=1.7"
                 imagesCell.appendChild(img)
             }
@@ -80,39 +76,30 @@ document.addEventListener('DOMContentLoaded', () => {
     function updatePark(id) {
         alert(`Update park with ID: ${id}`)
         // Implement update logic here
-        
     }
 
     function deletePark(id) {
-        alert(`Delete park with ID: ${id}`)
-        // Implement delete logic here
-        function deletePark(id) {
-            
-            if (confirm(`Are you sure you want to delete the park with ID: ${id}?`)) {
-                fetch(`https://resort-myapi.onrender.com/parks/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id: parkId })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to delete park')
-                    }
-                    return response.json()
-                })
-                .then(data => {
-                    console.log(`Park with ID: ${id} has been deleted`, data);
-                   
-                    const row = document.querySelector(`#waterParkTable tbody tr[data-id="${id}"]`);
-                    if (row) {
-                        row.remove();
-                    }
-                })
-                .catch(error => console.error('Error deleting park:', error));
-            }
+        if (confirm(`Are you sure you want to delete the park with ID: ${id}?`)) {
+            fetch(`http://localhost:8052/parks/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete park')
+                }
+                return response.json()
+            })
+            .then(data => {
+                console.log(`Park with ID: ${id} has been deleted`, data)
+                
+                // Remove the row with the specific data-id attribute
+                const row = document.querySelector(`#waterParkTable tbody tr[data-id="${id}"]`)
+                if (row) {
+                    row.remove()
+                }
+            })
+            .catch(error => console.error('Error deleting park:', error))
         }
-        
     }
-});
+    
+})

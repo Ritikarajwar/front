@@ -68,7 +68,7 @@
             console.log([...formData])
 
             try {
-                let response = await fetch('https://resort-myapi.onrender.com/adddata', {
+                let response = await fetch('http://localhost:8052/adddata', {
                     method: 'POST',
                     body: formData
                 });
