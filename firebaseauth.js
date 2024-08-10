@@ -3,9 +3,7 @@
  import{getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js"
  import{getFirestore , setDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js"
 
-//  import { configDotenv } from "dotenv"
 
-// configDotenv()
  
 const firebaseConfig = {
     apiKey: window.env.FIREBASE_API_KEY,
