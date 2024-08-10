@@ -1,11 +1,14 @@
- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"
- import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js"
- import{getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js"
- import{getFirestore , setDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
+// Check if config is available
+if (!window.config) {
+    console.error('Firebase configuration is missing!');
+}
 
- 
- const firebaseConfig = {
+const firebaseConfig = {
     apiKey: window.config.FIREBASE_API_KEY,
     authDomain: window.config.FIREBASE_AUTH_DOMAIN,
     projectId: window.config.FIREBASE_PROJECT_ID,
@@ -13,101 +16,90 @@
     messagingSenderId: window.config.FIREBASE_MESSAGING_SENDER_ID,
     appId: window.config.FIREBASE_APP_ID,
     measurementId: window.config.FIREBASE_MEASUREMENT_ID,
-}
- 
+};
 
- const app = initializeApp(firebaseConfig)
- const analytics = getAnalytics(app)
- const auth = getAuth(app)
- const db = getFirestore(app)
- 
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
- let email = document.querySelector("#email")
- let name = document.querySelector("#name")
- let password = document.querySelector("#password")
- let signupForm = document.querySelector("#signup_form")
- let loginForm = document.querySelector('#login_form')
+let email = document.querySelector("#email");
+let name = document.querySelector("#name");
+let password = document.querySelector("#password");
+let signupForm = document.querySelector("#signup_form");
+let loginForm = document.querySelector('#login_form');
 
-
- if (signupForm) {
+if (signupForm) {
     signupForm.addEventListener("submit", function(event) {
-        event.preventDefault()
+        event.preventDefault();
 
-        
-        let NameValue = name.value
-        let emailValue = email.value
-        let passwordValue = password.value
+        let NameValue = name.value;
+        let emailValue = email.value;
+        let passwordValue = password.value;
 
-       
         if (NameValue && emailValue && passwordValue) {
-            
-            alert(`Signing up with name: ${NameValue}, email: ${emailValue}`)
+            alert(`Signing up with name: ${NameValue}, email: ${emailValue}`);
 
             createUserWithEmailAndPassword(auth, emailValue, passwordValue)
-            .then((userCredential)=>{
-                const user = userCredential.user
-                const userData = {
-                    email: emailValue,
-                    name : NameValue,
-                    password : passwordValue
-                }
-                alert('account created successfully')
-                const docRef = doc(db,"users",user.uid)
-                setDoc(docRef,userData)
-                .then(()=>{
-                    window.location.href='login.html'
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    const userData = {
+                        email: emailValue,
+                        name: NameValue,
+                        password: passwordValue
+                    };
+                    alert('Account created successfully');
+                    const docRef = doc(db, "users", user.uid);
+                    setDoc(docRef, userData)
+                        .then(() => {
+                            window.location.href = 'login.html';
+                        })
+                        .catch((error) => {
+                            console.error("Error writing document", error);
+                        });
                 })
-                .catch((error)=>{
-                    console.error("error writing document",error)
-                })
-            })
-            .catch((error)=>{
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                if(errorCode =='auth/email-already-in-use'){
-                    alert('email address already exist !!!')
-                }
-                else{
-                    alert(`Unable to create user: ${errorMessage}`)
-                }
-            })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    if (errorCode == 'auth/email-already-in-use') {
+                        alert('Email address already exists!');
+                    } else {
+                        alert(`Unable to create user: ${errorMessage}`);
+                    }
+                });
         } else {
-            alert("Please fill in all fields.")
-            
+            alert("Please fill in all fields.");
         }
-    })
+    });
 }
 
-
-if(loginForm){
+if (loginForm) {
     loginForm.addEventListener("submit", function(event) {
-        event.preventDefault()
-        let emailValue = email.value
-        let passwordValue = password.value
+        event.preventDefault();
+        let emailValue = email.value;
+        let passwordValue = password.value;
 
-        if(emailValue && passwordValue){
-            alert(`Loging in with email: ${emailValue}`)
+        if (emailValue && passwordValue) {
+            alert(`Logging in with email: ${emailValue}`);
 
             signInWithEmailAndPassword(auth, emailValue, passwordValue)
                 .then((userCredential) => {
-                  
-                    const user = userCredential.user
-                    alert('Login successful!')
+                    const user = userCredential.user;
+                    alert('Login successful!');
 
                     localStorage.setItem('user', JSON.stringify({
                         uid: user.uid,
                         email: user.email
-                    }))
-                  
-                    window.location.href = 'add.html'
+                    }));
+
+                    window.location.href = 'add.html';
                 })
                 .catch((error) => {
-                    const errorCode = error.code
-                    const errorMessage = error.message
-                    console.error("Error logging in:", errorCode, errorMessage)
-                    alert(`Unable to log in: ${errorMessage}`)
-                })
-
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error("Error logging in:", errorCode, errorMessage);
+                    alert(`Unable to log in: ${errorMessage}`);
+                });
         }
-    })
+    });
 }
