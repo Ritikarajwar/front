@@ -26,18 +26,6 @@
         </tbody>
     </table>
 
-<script src="index.js">
-    window.onload = () => {
-        const user = localStorage.getItem('user')
-        if (!user) {
-            console.log('User is not logged in')
-            window.location.href = 'login.html'
-        } else {
-            const userData = JSON.parse(user)
-            console.log('User is logged in:', userData)
-
-        }
-    }
-</script>
+<script src="index.js"></script>
 </body>
 </html>

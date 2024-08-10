@@ -1,3 +1,15 @@
+window.onload = () => {
+    const user = localStorage.getItem('user')
+    if (!user) {
+        console.log('User is not logged in')
+        window.location.href = 'login.html'
+    } else {
+        const userData = JSON.parse(user)
+        console.log('User is logged in:', userData)
+
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     fetch('https://resort-myapi.onrender.com')
         .then(response => response.json())
