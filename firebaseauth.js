@@ -1,9 +1,9 @@
- import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
- import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
- import{getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"
+ import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js"
+ import{getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js"
  import{getFirestore , setDoc, doc} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js"
 
- import { configDotenv } from "dotenv";
+ import { configDotenv } from "dotenv"
 
 configDotenv()
  
@@ -15,12 +15,12 @@ const firebaseConfig = {
     messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.FIREBASE_APP_ID,
     measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-  };
+  }
 
- const app = initializeApp(firebaseConfig);
- const analytics = getAnalytics(app);
- const auth = getAuth(app);
- const db = getFirestore(app);
+ const app = initializeApp(firebaseConfig)
+ const analytics = getAnalytics(app)
+ const auth = getAuth(app)
+ const db = getFirestore(app)
  
 
  let email = document.querySelector("#email")
