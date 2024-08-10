@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost:8052')
+    fetch('https://resort-myapi.onrender.com')
         .then(response => response.json())
         .then(data => {
             console.log(data)
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function deletePark(id) {
         if (confirm(`Are you sure you want to delete the park with ID: ${id}?`)) {
-            fetch(`http://localhost:8052/parks/${id}`, {
+            fetch(`https://resort-myapi.onrender.com/${id}`, {
                 method: 'DELETE'
             })
             .then(response => {

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="Form">
+        <input type="text" name="name" placeholder="name" id="name">
+        <br>
+        <input type="text" name="location" placeholder="location" id="location">
+        <br>
+        <input type="time" name="starttime" placeholder="start time" id="starttime">
+        <input type="time" name="endtime" placeholder="end time" id="endtime">
+        <br>
+        <input type="number" name="adultfees" placeholder="adult entry fees" id="adultfees">
+        <input type="number" name="childfees" placeholder="child entry fees" id="childfees">
+        <br>
+        <input type="text" name="currency" placeholder="currency" id="currency">
+        <br>
+        <input type="file" name="image1" id="image1">
+        <br>
+        <input type="file" name="image2" id="image2">
+        <br>
+        <input type="file" name="image3" id="image3">
+        <br>
+        <input type="text" name="description" placeholder="description" id="description">
+        <br>
+        <button type="submit">submit</button>
+    </form>
+    <button id="logout">logout</button>
+    <a href="updatedata.html">
+        UPDATE DATA
+    </a>
+    <script>
+        let form = document.querySelector('#Form')
+
+        form.onsubmit = async (e) => {
+            e.preventDefault()
+
+            let name = document.querySelector('#name').value
+            let location = document.querySelector('#location').value
+            let starttime = document.querySelector('#starttime').value
+            let endtime = document.querySelector('#endtime').value
+            let adultfees = document.querySelector('#adultfees').value
+            let childfees = document.querySelector('#childfees').value
+            let currency = document.querySelector('#currency').value
+            let image1 = document.querySelector('#image1').files[0]
+            let image2 = document.querySelector('#image2').files[0]
+            let image3 = document.querySelector('#image3').files[0]
+            let description = document.querySelector('#description').value
+
+            let formData = new FormData()
+            formData.append('name', name)
+            formData.append('location', location)
+            formData.append('starttime', starttime)
+            formData.append('endtime', endtime)
+            formData.append('adultfees', adultfees)
+            formData.append('childfees', childfees)
+            formData.append('currency', currency)
+            formData.append('image1', image1)
+            formData.append('image2', image2)
+            formData.append('image3', image3)
+            formData.append('description', description)
+
+            console.log([...formData])
+
+            try {
+                let response = await fetch('https://resort-myapi.onrender/adddata', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    let result = await response.json()
+                    console.log('Success:', result)
+                } else {
+                    console.error('Error:', response.statusText)
+                }
+            } catch (error) {
+                console.error('Fetch error:', error)
+            }
+
+        }
+
+        window.onload = () => {
+        const user = localStorage.getItem('user')
+        if (!user) {
+            console.log('User is not logged in')
+            window.location.href = 'login.html'
+        } else {
+            const userData = JSON.parse(user)
+            console.log('User is logged in:', userData)
+
+        }
+    }
+
+    let btn = document.querySelector('#logout')
+    btn.addEventListener('click', () => {
+        localStorage.removeItem('user')
+        console.log('User logged out')
+        window.location.href = 'login.html'
+    })
+    </script>
+</body>
+
+</html>
