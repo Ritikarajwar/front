@@ -1,4 +1,4 @@
-import { error } from "console"
+// import { error } from "console"
 
 window.onload = () => {
     const user = localStorage.getItem('user')
