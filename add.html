@@ -147,19 +147,21 @@
 
             try {
                 let response = await fetch('https://resort-myapi.onrender.com/adddata', {
-                    method: 'POST',
-                    body: formData
-                });
+            method: 'POST',
+            body: formData
+        });
 
-                if (response.ok) {
-                    let result = await response.json()
-                    console.log('Success:', result)
-                } else {
-                    console.error('Error:', response.statusText)
-                }
-            } catch (error) {
-                console.error('Fetch error:', error)
-            }
+        if (!response.ok) {
+            console.error(`Error: ${response.status} ${response.statusText}`);
+            const errorData = await response.json();
+            console.error('Error Details:', errorData);
+        } else {
+            let result = await response.json();
+            console.log('Success:', result);
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
 
         }
 
