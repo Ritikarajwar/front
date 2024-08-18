@@ -1,5 +1,3 @@
-// import { error } from "console"
-
 window.onload = () => {
     const user = localStorage.getItem('user')
     if (!user) {
@@ -99,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(error)
+                    throw new Error('Failed to delete park',Error)
                 }
                 return response.json()
             })
