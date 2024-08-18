@@ -92,12 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function deletePark(id) {
         if (confirm(`Are you sure you want to delete the park with ID: ${id}?`)) {
-            fetch(`https://resort-myapi.onrender.com/${id}`, {
+            fetch(`https://resort-myapi.onrender.com/parks/${id}`, {
                 method: 'DELETE'
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Failed to delete park',Error)
+                    throw new Error('Failed to delete park')
                 }
                 return response.json()
             })
