@@ -69,10 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
             row.appendChild(imagesCell)
 
             const actionsCell = document.createElement('td')
-            const updateButton = document.createElement('button')
-            updateButton.textContent = 'Update'
-            updateButton.onclick = () => updatePark(park.id)
-            actionsCell.appendChild(updateButton)
+            // const updateButton = document.createElement('button')
+            // updateButton.textContent = 'Update'
+            // updateButton.onclick = () => updatePark(park.id)
+            // actionsCell.appendChild(updateButton)
 
             const deleteButton = document.createElement('button')
             deleteButton.textContent = 'Delete'
